@@ -27,7 +27,7 @@ class TestUrbanRoutes:
         # Adicionar em S8
         print("função criada")
         pass
-    def est_order_2_ice_creams("self"):
+    def test_order_2_ice_creams("self"):
         # Adicionar em S8
         print("função criada para dados do sorvete")
         pass
