@@ -11,6 +11,26 @@ class UrbanRoutesPage:
     from_field = (By.ID, 'from')
     to_field = (By.ID, 'to')
 
+ #selecionar tarifa e chamar o taxi
+taxi_option_locator = (By.XPATH,'')
+comfort_icon_locator = (By.XPATH,'')
+comfort_active = (By.XPATH,'')
+
+#numero de telefone
+number_text_locator = (By.CSS_SELECTOR,'')
+number_enter = (By.ID,'')
+number_confirm = (By.CSS_SELECTOR,'')
+number_code = (By.XPATH,'')
+code_confirm = (By.XPATH,'')
+number_finish = (By.CSS_SELECTOR,'')
+
+#metodo de pagamento
+add_metodo_pagamento = (By. CSS_SELECTOR,'')
+add_card = (By.CSS_SELECTOR,'')
+number_card = (By.ID,'')
+code_card = (By.CSS_SELECTOR,'')
+add_finish_card = (By.XPATH,'')
+
     def __init__(self, driver):
         self.driver = driver
 
