@@ -1,7 +1,10 @@
+import time
+
 from pages import UrbanRoutesPage
-from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
 import data
 import helpers
 
@@ -9,10 +12,10 @@ import helpers
 class TestUrbanRoutes:
     @classmethod
     def setup_class(cls):
-        from selenium.webdriver import DesiredCapabilities
-        capabilities = DesiredCapabilities.CHROME
-        capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
-        cls.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
+        cls.driver = webdriver.Chrome(options=chrome_options)
+        cls.driver.implicitly_wait(10)
 
         if helpers.is_url_reachable(data.URBAN_ROUTES_URL):
             print("Conectado ao servidor Urban Routes")
@@ -20,15 +23,11 @@ class TestUrbanRoutes:
             print("Não foi possível conectar ao Urban Routes. Verifique se o servidor está ligado e ainda em execução")
 
     def test_set_route(self):
-        self.drive.get(data.URBAN_ROUTES_URL)
+        self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
-        WebDriverWait(self.driver, 2).until(lambda d: True)
-        routes_page.enter_to_location(data.ADDRESS_FROM,data.ADDRESS_TO)
-        WebDriverWait(self.driver, 1).until(lambda d: True)
+        routes_page.enter_locations(data.ADDRESS_FROM,data.ADDRESS_TO)
         assert routes_page.get_from_location_value() == data.ADDRESS_FROM
         assert routes_page.get_to_location_value() == data.ADDRESS_TO
-
-
         # Adicionar em S8
         print("função criada para definir a rota")
         pass
@@ -70,5 +69,3 @@ class TestUrbanRoutes:
         print("função criada")
         pass
 
-    from selenium import webdriver
-    webdriver.Chrome()
