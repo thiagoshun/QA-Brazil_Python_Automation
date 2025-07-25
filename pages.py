@@ -31,6 +31,15 @@ number_card = (By.ID,'')
 code_card = (By.CSS_SELECTOR,'')
 add_finish_card = (By.XPATH,'')
 
+#adicionar comentario
+add_comment = (By.ID, 'comment')
+switch_blanker = (By.CSS_SELECTOR, '')
+switch_blanker_active = (By.CSS_SELECTOR, '')
+add_icecream = (By. CSS_SELECTOR, '')
+qnt_icecream = (By. CSS_SELECTOR, '')
+call_taxi_button = (By. CSS_SELECTOR, '')
+pop_up = (By.CSS_SELECTOR, '')
+
     def __init__(self, driver):
         self.driver = driver
 
