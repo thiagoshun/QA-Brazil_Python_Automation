@@ -36,7 +36,7 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        assert routes_page.click_confort_active()
+        assert routes_page.click_comfort_active()
         time.sleep(5)
 
 
@@ -76,7 +76,7 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        routes_page.switch_cobertor_active() is True
+        assert routes_page.switch_cobertor_active()
 
 
     def test_order_2_ice_creams(self):
@@ -85,7 +85,7 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        for _in range(2):
+        for _ in range(2):
             routes_page.add_ice()
         assert int(routes_page.qnt_sorvete()) == 2
 
