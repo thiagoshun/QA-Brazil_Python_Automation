@@ -18,12 +18,12 @@ class UrbanRoutesPage:
     comfort_active = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[1]/div[5]')
 
     # Número de telefone
-    number_text_locator = (By.CSS_SELECTOR, '.np-button.filled')
+    number_text_locator = (By.CSS_SELECTOR, '.np-text')
     number_enter = (By.ID, 'phone')
     number_confirm = (By.CSS_SELECTOR, '.button.full')
     number_code = (By.XPATH, 'code')
     code_confirm = (By.XPATH, '//button[contains(text(),"confirmar")]')
-    number_finish = (By.CSS_SELECTOR, '.np-text')
+    number_finish = (By.CSS_SELECTOR, 'phone')
 
     # Método de pagamento
     add_metodo_pagamento = (By.CSS_SELECTOR, '.pp-button.filled')
@@ -87,7 +87,21 @@ class UrbanRoutesPage:
             EC.presence_of_element_located(self.comfort_active)
         ).is_displayed()
 
-    def preencher_numero_telefone(self, number):
+    def click_button_tel(self):
         WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located(self.pr)
-        ).is_displayed()
+            EC.element_to_be_clickable(self.number_text_locator)
+        ).click()
+
+    def preencher_numero_telefone(self):
+        phone_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.number_enter)
+        )
+        phone_input.send_keys('+1 123 123 12 12')
+
+
+    def numero_confirmado(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.number_enter)
+        ).text
+
+

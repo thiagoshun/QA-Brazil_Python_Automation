@@ -1,4 +1,5 @@
 import time
+from time import sleep
 
 from pages import UrbanRoutesPage
 from selenium.webdriver.support.ui import WebDriverWait
@@ -47,6 +48,8 @@ class TestUrbanRoutes:
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
         routes_page.click_button_tel()
+        routes_page.preencher_numero_telefone()
+        time.sleep(3)
         assert data.PHONE_NUMBER in routes_page.numero_confirmado()
 
 
