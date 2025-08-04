@@ -86,3 +86,8 @@ class UrbanRoutesPage:
         return WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(self.comfort_active)
         ).is_displayed()
+
+    def preencher_numero_telefone(self, number):
+        WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located(self.pr)
+        ).is_displayed()

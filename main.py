@@ -46,7 +46,7 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        routes_page.click_number_text(data.PHONE_NUMBER)
+        routes_page.click_button_tel()
         assert data.PHONE_NUMBER in routes_page.numero_confirmado()
 
 
