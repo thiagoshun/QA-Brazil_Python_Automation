@@ -98,10 +98,21 @@ class UrbanRoutesPage:
         )
         phone_input.send_keys('+1 123 123 12 12')
 
-
     def numero_confirmado(self):
-        return WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(self.number_enter)
-        ).text
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.number_confirm)
+        ).click()
+
+    def code_numero(self):
+        phone_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.number_code)
+        )
+        phone_input.send_keys('+1 123 123 12 12')
+
+    def code_confirmado(self):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.code_confirm)
+        ).click()
+
 
 

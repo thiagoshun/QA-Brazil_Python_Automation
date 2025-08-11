@@ -49,8 +49,12 @@ class TestUrbanRoutes:
         routes_page.click_comfort_icon()
         routes_page.click_button_tel()
         routes_page.preencher_numero_telefone()
-        time.sleep(3)
+        time.sleep(1)
+        routes_page.numero_confirmado()
         assert data.PHONE_NUMBER in routes_page.numero_confirmado()
+        routes_page.code_numero()
+        routes_page.code_confirmado()
+        assert  data.PHONE_NUMBER in routes_page.code_confirmado()
 
 
     def test_fill_card(self):
