@@ -36,8 +36,7 @@ class UrbanRoutesPage:
     # Finalizar número (possível erro no seletor)
     number_finish = (By.CSS_SELECTOR, 'phone')
 
-    # Método de pagamento
-    # Botão para adicionar método de pagamento
+    # Botão para adicionar metodo de pagamento
     add_metodo_pagamento_locator = (By.CSS_SELECTOR, '.pp-button.filled')
     # Botão adicionar cartão
     add_card_locator = (By.CSS_SELECTOR, '.pp-plus')
