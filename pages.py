@@ -44,11 +44,11 @@ class UrbanRoutesPage:
     # Campo número do cartão
     number_card_locator = (By.ID, 'number')
     # Campo código do cartão (CVC)
-    code_card_locator = (By.CSS_SELECTOR, '.input.card-input#code')
+    code_card_locator = (By.CSS_SELECTOR, '#code.card-input')
     # Botão finalizar adição do cartão
-    add_finish_card_locator = (By.XPATH, '//button[contains(text(),"Adicionar")]')
+    add_finish_card_locator = (By.CSS_SELECTOR, '.payment-picker.open .modal .section.active .close-button.section-close')
     # Botão fechar janela de cartão
-    close_button_card_locator = (By.CSS_SELECTOR, '.payment-picker.open .close-button')
+    close_button_card_locator = (By.CSS_SELECTOR, '.close-button section-close')
     # Texto de confirmação do cartão
     confirm_card_locator = (By.CSS_SELECTOR, '.pp-value-text')
 
@@ -173,17 +173,11 @@ class UrbanRoutesPage:
             EC.element_to_be_clickable(self.add_card_locator)
         ).click()
         # Preenche o número do cartão
-        self.driver.find_element(*self.number_card_locator).send_keys(CARD_NUMBER)
+        self.driver.find_element(*self.number_card_locator).send_keys(card_number)
         # Preenche o código de segurança
-        self.driver.find_element(*self.code_card_locator).send_keys(CARD_CODE)
+        self.driver.find_element(*self.code_card_locator).send_keys(card_code)
         # Clica no botão de adicionar
         self.driver.find_element(*self.add_finish_card_locator).click()
-
-#fechar no X da janela do add cartao
-    def close_button_card(self):
-        WebDriverWait(self.driver,5).until(
-            EC.element_to_be_clickable(self.close_button_card_locator)
-        ).click()
 
         # Confirma se cartão foi adicionado com sucesso
     def confirm_card(self):
@@ -191,5 +185,69 @@ class UrbanRoutesPage:
             EC.visibility_of_element_located(self.confirm_card_locator)
         ).text
 
+    # Preenche o campo de comentário
+    def add_comentario(self, mensagem):
+        # Espera o campo de comentário estar visível
+        comment_input = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.add_comment)
+        )
+        comment_input.clear()  # Limpa caso já tenha texto
+        comment_input.send_keys(mensagem)
 
+    # Retorna o texto do comentário para validação
+    def coment_confirm(self):
+        # Espera o campo que mostra o comentário preenchido
+        return WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.add_comment)
+        ).get_attribute("value")  # "value" porque é um input
+
+    def switch_cobertor_active(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located(self.switch_blanker_active)
+        ).is_displayed()
+
+    def add_ice(self):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.add_icecream)
+        ).click()
+
+    # Retorna a quantidade de sorvete como string, depois convertida para int no teste
+    def qnt_sorvete(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.qnt_icecream)
+        ).text
+
+    # Clica no campo do número e digita
+    def click_number_text(self, phone_number):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.number_text_locator)
+        ).click()
+        self.driver.find_element(*self.number_enter).send_keys(phone_number)
+
+    # Adiciona cartão
+    def click_add_cartao(self, card_number, card_code):
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.add_card_locator)
+        ).click()
+        self.driver.find_element(*self.number_card_locator).send_keys(card_number)
+        self.driver.find_element(*self.code_card_locator).send_keys(card_code)
+        self.driver.find_element(*self.add_finish_card_locator).click()
+
+    # Adiciona comentário
+    def add_comentario(self, message):
+        WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.add_comment_locator)
+        ).send_keys(message)
+
+    # Chama o táxi
+    def call_taxi(self):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.call_taxi_button_locator)
+        ).click()
+
+    # Retorna texto do pop-up
+    def pop_up_show(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.pop_up_locator)
+        ).text
 

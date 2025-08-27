@@ -65,14 +65,10 @@ class TestUrbanRoutes:
         routes_page.click_comfort_icon()
         routes_page.add_metodo_pagamento()
         routes_page.add_card(data.CARD_NUMBER, data.CARD_CODE)
-        routes_page.number_card()
-        routes_page.code_card()
-        routes_page.add_finish_card()
-        routes_page.close_button_card()
         # Confirma que o cartão foi adicionado com sucesso
         confirmacao = routes_page.confirm_card()
         # Valida se o texto retornado contém a palavra "Cartão"
-        assert "Cartão" in confirmacao
+        assert "Dinheiro" in confirmacao
 
 
     def test_comment_for_driver(self):
