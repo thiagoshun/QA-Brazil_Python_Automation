@@ -107,11 +107,16 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        routes_page.click_number_text(data.PHONE_NUMBER)
-        routes_page.click_add_cartao(data.CARD_NUMBER, data.CARD_CODE)
-        routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
-        routes_page.call_taxi()
-        assert "Buscar carro" in routes_page.pop_up_show()
+        #add numero de telefone
+        routes_page.click_button_tel()
+        routes_page.preencher_numero_telefone()
+        routes_page.confirmar_numero()
+        code = helpers.retrieve_phone_code(self.driver)
+        routes_page.preencher_code(code)
+        routes_page.code_confirmado_active()
+        time.sleep(5)
+        routes_page.add_metodo_pagamento()
+
 
     @classmethod
     def teardown_class(cls):

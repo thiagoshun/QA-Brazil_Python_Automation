@@ -215,38 +215,3 @@ class UrbanRoutesPage:
         return WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(self.qnt_icecream)
         ).text
-
-    # Clica no campo do número e digita
-    def click_number_text(self, phone_number):
-        WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable(self.number_text_locator)
-        ).click()
-        self.driver.find_element(*self.number_enter).send_keys(phone_number)
-
-    # Adiciona cartão
-    def click_add_cartao(self, card_number, card_code):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.add_card_locator)
-        ).click()
-        self.driver.find_element(*self.number_card_locator).send_keys(card_number)
-        self.driver.find_element(*self.code_card_locator).send_keys(card_code)
-        self.driver.find_element(*self.add_finish_card_locator).click()
-
-    # Adiciona comentário
-    def add_comentario(self, message):
-        WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(self.add_comment_locator)
-        ).send_keys(message)
-
-    # Chama o táxi
-    def call_taxi(self):
-        WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable(self.call_taxi_button_locator)
-        ).click()
-
-    # Retorna texto do pop-up
-    def pop_up_show(self):
-        return WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(self.pop_up_locator)
-        ).text
-
