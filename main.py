@@ -49,12 +49,12 @@ class TestUrbanRoutes:
         routes_page.click_comfort_icon()
         routes_page.click_button_tel()
         routes_page.preencher_numero_telefone()
-        time.sleep(1)
-        routes_page.numero_confirmado()
-        assert data.PHONE_NUMBER in routes_page.numero_confirmado()
-        routes_page.code_numero()
+        time.sleep(3)
+        routes_page.confirmar_numero()
+        code = helpers.retrieve_phone_code(self.driver)#function utilizada para recuperar o cod
+        routes_page.preencher_code(code)#receb o cod
         routes_page.code_confirmado()
-        assert  data.PHONE_NUMBER in routes_page.code_confirmado()
+        assert routes_page.code_confirmado_active() #validar que o numero que inseri apareceu depois
 
 
     def test_fill_card(self):
@@ -63,8 +63,16 @@ class TestUrbanRoutes:
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        routes_page.click_add_cartao(data.CARD_NUMBER, data.CARD_CODE)
-        assert "Cartão" in routes_page.confirm_cartao()
+        routes_page.add_metodo_pagamento()
+        routes_page.add_card(data.CARD_NUMBER, data.CARD_CODE)
+        routes_page.number_card()
+        routes_page.code_card()
+        routes_page.add_finish_card()
+        routes_page.close_button_card()
+        # Confirma que o cartão foi adicionado com sucesso
+        confirmacao = routes_page.confirm_card()
+        # Valida se o texto retornado contém a palavra "Cartão"
+        assert "Cartão" in confirmacao
 
 
     def test_comment_for_driver(self):

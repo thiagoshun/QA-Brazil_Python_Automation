@@ -9,110 +9,187 @@ def wait_a_bit():
 
 class UrbanRoutesPage:
     # Seção DE e PARA
+    # Localizador do campo de origem (ID = 'from')
     from_field = (By.ID, 'from')
+    # Localizador do campo de destino (ID = 'to')
     to_field = (By.ID, 'to')
 
     # Selecionar tarifa e chamar o taxi
+    # Localiza o botão "Chamar" pelo texto
     taxi_option_locator = (By.XPATH, '//button[contains(text(),"Chamar")]') #verificar
+    # Localiza o ícone de conforto (imagem kids)
     comfort_icon_locator = (By.XPATH, '//img[@src="/static/media/kids.075fd8d4.svg"]')
+    # Localiza quando o conforto está ativo
     comfort_active = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[1]/div[5]')
 
     # Número de telefone
+    # Localiza texto/label do telefone
     number_text_locator = (By.CSS_SELECTOR, '.np-text')
+    # Localiza campo de digitar número (ID = 'phone')
     number_enter = (By.ID, 'phone')
+    # Botão confirmar número
     number_confirm = (By.CSS_SELECTOR, '.button.full')
-    number_code = (By.XPATH, 'code')
-    code_confirm = (By.XPATH, '//button[contains(text(),"confirmar")]')
+    # Campo para inserir código SMS
+    number_code = (By.ID, 'code')
+    # Botão confirmar código
+    code_confirm = (By.XPATH, '//button[contains(text(),"Confirmar")]')
+    # Finalizar número (possível erro no seletor)
     number_finish = (By.CSS_SELECTOR, 'phone')
 
     # Método de pagamento
-    add_metodo_pagamento = (By.CSS_SELECTOR, '.pp-button.filled')
-    add_card = (By.CSS_SELECTOR, '.pp-plus')
-    number_card = (By.ID, 'number')
-    code_card = (By.CSS_SELECTOR, '.input.card-input#code')
-    add_finish_card = (By.XPATH, '//button[contains(text(),"Adicionar")]')
-    close_button_card = (By.CSS_SELECTOR, '.payment-picker.open .close-button')
-    confirm_card = (By.CSS_SELECTOR, '.pp-value-text')
+    # Botão para adicionar método de pagamento
+    add_metodo_pagamento_locator = (By.CSS_SELECTOR, '.pp-button.filled')
+    # Botão adicionar cartão
+    add_card_locator = (By.CSS_SELECTOR, '.pp-plus')
+    # Campo número do cartão
+    number_card_locator = (By.ID, 'number')
+    # Campo código do cartão (CVC)
+    code_card_locator = (By.CSS_SELECTOR, '.input.card-input#code')
+    # Botão finalizar adição do cartão
+    add_finish_card_locator = (By.XPATH, '//button[contains(text(),"Adicionar")]')
+    # Botão fechar janela de cartão
+    close_button_card_locator = (By.CSS_SELECTOR, '.payment-picker.open .close-button')
+    # Texto de confirmação do cartão
+    confirm_card_locator = (By.CSS_SELECTOR, '.pp-value-text')
 
     # Adicionar comentário
+    # Campo de adicionar comentário
     add_comment = (By.ID, 'comment')
+    # Interruptor de opção extra
     switch_blanker = (By.CSS_SELECTOR, '.switch')
+    # Localizador do switch ativo
     switch_blanker_active = (By.CSS_SELECTOR, '#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.reqs.open > div.reqs-body > div:nth-child(1) > div > div.r-sw > div')
+    # Botão de adicionar sorvete
     add_icecream = (By.CSS_SELECTOR, '.counter-plus')  # Corrigido '<.counter-plus' para '.counter-plus'
+    # Mostra a quantidade de sorvete
     qnt_icecream = (By.CSS_SELECTOR, '.counter-value')
+    # Botão para chamar o táxi
     call_taxi_button = (By.CSS_SELECTOR, '.smart-button')
+    # Pop-up de confirmação
     pop_up = (By.CSS_SELECTOR, '.order-header-title')
 
+    # Construtor da classe que recebe o driver do Selenium
     def __init__(self, driver):
         self.driver = driver
 
+    # Preenche o campo "De" com o texto informado
     def enter_from_location(self, from_text):
         WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located(self.from_field)
         )
         self.driver.find_element(*self.from_field).send_keys(from_text)
 
+    # Preenche o campo "Para" com o texto informado
     def enter_to_location(self, to_text):
         WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located(self.to_field)
         )
         self.driver.find_element(*self.to_field).send_keys(to_text)
 
+    # Preenche origem e destino de uma vez
     def enter_locations(self, from_text, to_text):
         self.enter_from_location(from_text)
         self.enter_to_location(to_text)
 
+    # Retorna o valor digitado no campo "De"
     def get_from_location_value(self):
         return WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located(self.from_field)
         ).get_attribute('value')
 
+    # Retorna o valor digitado no campo "Para"
     def get_to_location_value(self):
         return WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located(self.to_field)
         ).get_attribute('value')
 
+    # Clica no botão de chamar táxi
     def click_taxi_option(self):
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable(self.taxi_option_locator)
         ).click()
 
+    # Clica no ícone de conforto
     def click_comfort_icon(self):
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable(self.comfort_icon_locator)
         ).click()
 
+    # Verifica se o conforto está ativo (retorna True/False)
     def click_comfort_active(self):
         return WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(self.comfort_active)
         ).is_displayed()
 
+    # Clica no botão de telefone
     def click_button_tel(self):
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable(self.number_text_locator)
         ).click()
 
+    # Preenche o campo número de telefone
     def preencher_numero_telefone(self):
         phone_input = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(self.number_enter)
         )
         phone_input.send_keys('+1 123 123 12 12')
 
-    def numero_confirmado(self):
+    # Clica para confirmar o número de telefone
+    def confirmar_numero(self):
         WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable(self.number_confirm)
+            EC.visibility_of_element_located(self.number_confirm)
         ).click()
 
-    def code_numero(self):
-        phone_input = WebDriverWait(self.driver, 5).until(
+    # Preenche o código SMS recebido
+    def preencher_code(self, code): #recebendo como parametro
+        WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(self.number_code)
         )
-        phone_input.send_keys('+1 123 123 12 12')
+        # Corrigido: adiciona o código no campo
+        self.driver.find_element(*self.number_code).send_keys(code)
 
+    # Confirma o código enviado
     def code_confirmado(self):
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable(self.code_confirm)
         ).click()
+
+#validar o cod no assert
+    def code_confirmado_active(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located(self.comfort_active)
+        ).is_displayed()
+
+
+#click metodo de pagamento
+    def add_metodo_pagamento(self):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.add_metodo_pagamento_locator)
+        ).click()
+
+#add card more number and code
+    def add_card(self, card_number, card_code):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.add_card_locator)
+        ).click()
+        # Preenche o número do cartão
+        self.driver.find_element(*self.number_card_locator).send_keys(CARD_NUMBER)
+        # Preenche o código de segurança
+        self.driver.find_element(*self.code_card_locator).send_keys(CARD_CODE)
+        # Clica no botão de adicionar
+        self.driver.find_element(*self.add_finish_card_locator).click()
+
+#fechar no X da janela do add cartao
+    def close_button_card(self):
+        WebDriverWait(self.driver,5).until(
+            EC.element_to_be_clickable(self.close_button_card_locator)
+        ).click()
+
+        # Confirma se cartão foi adicionado com sucesso
+    def confirm_card(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.confirm_card_locator)
+        ).text
 
 
 
