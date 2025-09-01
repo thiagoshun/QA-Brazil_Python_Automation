@@ -113,9 +113,13 @@ class TestUrbanRoutes:
         routes_page.confirmar_numero()
         code = helpers.retrieve_phone_code(self.driver)
         routes_page.preencher_code(code)
-        routes_page.code_confirmado_active()
+        routes_page.code_confirmado()
         time.sleep(5)
         routes_page.add_metodo_pagamento()
+        routes_page.add_card(data.CARD_NUMBER, data.CARD_CODE)
+        confirmacao = routes_page.confirm_card()
+        routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
+        time.sleep(5)
 
 
     @classmethod
