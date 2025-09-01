@@ -120,6 +120,8 @@ class TestUrbanRoutes:
         confirmacao = routes_page.confirm_card()
         routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
         time.sleep(5)
+        routes_page.click_pedir_taxi()
+        assert routes_page.click_pedir_taxi_active()
 
 
     @classmethod

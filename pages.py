@@ -67,6 +67,11 @@ class UrbanRoutesPage:
     # Pop-up de confirmação
     pop_up = (By.CSS_SELECTOR, '.order-header-title')
 
+#confirmar o taxi
+    chamar_taxi_locator = (By.CSS_SELECTOR, '.smart-button')
+    show_order = (By.CSS_SELECTOR, '.order')
+
+
     # Construtor da classe que recebe o driver do Selenium
     def __init__(self, driver):
         self.driver = driver
@@ -215,3 +220,14 @@ class UrbanRoutesPage:
         return WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located(self.qnt_icecream)
         ).text
+
+    def click_pedir_taxi(self):
+        WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable(self.chamar_taxi_locator)
+        ).click()
+
+    def click_pedir_taxi_active(self):
+        return WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located(self.show_order)
+        ).is_displayed()
+
